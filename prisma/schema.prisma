@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CarCondition {
+  NEW
+  USED
+  DAMAGED
+
+  @@map("car_condition")
+}
+
+model Car {
+  id            String       @id @default(uuid())
+  licensePlate  String       @unique @map("license_plate")
+  year          Int
+  brand         String
+  color         String
+  condition     CarCondition
+  ownerLastName String       @map("owner_last_name")
+  address       String
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  @@map("cars")
+}
